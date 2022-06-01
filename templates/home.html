@@ -6,8 +6,8 @@
     <!-- Required meta tags -->
     <meta charset="UTF-8">
     <title>Post입니다</title>
-    <meta name="_csrf" th:content="${_csrf.token}"/>
-    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+{#    <meta name="_csrf" th:content="${_csrf.token}"/>#}
+{#    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>#}
     <script src="https://use.fortawesome.com/99966411.js"></script>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
@@ -69,33 +69,41 @@
                 <button id="modal_x_box" class="modal_x_box"><i class="fa fa-x"></i></button>
             </div>
             <div id="image_upload" class="addition_modal_body">
-                사진을 여기에 끌어다 놓으세요
+                <form action="/post/" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form-group mb-2" style="color:white">
+                        <input type="file"
+                           id="img_upload" name="img_upload"
+                           accept="image/png, image/jpeg">
+{#                        <textarea class="form-control" style="resize: none" name='my-content'#}
+{#                                  id="my-content"></textarea>#}
+                        <button type="submit" class="btn btn-primary" style="float:right;">작성하기</button>
+                    </div>
 
+                </form>
             </div>
         </div>
     </div>
-    <!--더하기 버튼 모달(새게시물 만들기)//두번째-->
-    <div id="second_modal" class="modal_overlay">
-        <div class="modal_window2">
-            <div class="addition_modal_head">
-                새 게시물 만들기
-                <button id="modal_x_box2" class="modal_x_box"><i class="fa fa-x"></i></button>
-            </div>
-            <div class="addition_modal_body2">
-                <div class="img_upload_space"></div>
-                <div class="img_description_space">
-                    <div class="img_description_box">
-                        <textarea id="input_feed_content" style="width:100%;height: 100%"
-                            placeholder="내용을 써주세요^^"></textarea>
-                    </div>
-                    <div style="justify-content: center;display: flex">
-                        <button id="feed_create_button" onclick="uploading_files()"
-                            style="background-color: transparent; border-color: #C7B0FFFF; color: #C7B0FFFF;width:100px;border-radius: 5px ">Submit</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+{#    <!--더하기 버튼 모달(새게시물 만들기)//두번째-->#}
+{#    <div id="second_modal" class="modal_overlay">#}
+{#        <div class="modal_window2">#}
+{#            <div class="addition_modal_head">#}
+{#                새 게시물 만들기#}
+{#                <button id="modal_x_box2" class="modal_x_box"><i class="fa fa-x"></i></button>#}
+{#            </div>#}
+{#            <div class="addition_modal_body2">#}
+{#                <div class="img_upload_space"></div>#}
+{#                <div class="img_description_space">#}
+{#                    <div class="img_description_box">#}
+{##}
+{#                    <div style="justify-content: center;display: flex">#}
+{#                        <button id="feed_create_button" onclick="uploading_files()"#}
+{#                            style="background-color: transparent; border-color: #C7B0FFFF; color: #C7B0FFFF;width:100px;border-radius: 5px ">Submit</button>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
 
 
 
@@ -176,8 +184,6 @@
 
     //파일 업로드 여기서부터 시작
     function uploading_files() {
-        var token = $("meta[name='_csrf']").attr("content");
-        var header = $("meta[name='_csrf_header']").attr("content");
         let file = files[0]; //실제 파일
         let image = files[0].name; //파일명
         let desc = $('#input_feed_content').val(); //이미지 밑에 쓴 글
