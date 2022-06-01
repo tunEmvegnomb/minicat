@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>로그인</title>
+    <title>회원가입</title>
 </head>
 <body>
-<h1>로그인</h1>
-    <form method="post" action="/sign-in/">
+<h1>회원가입</h1>
+    <form method="post" action="/sign-up/">
         {% csrf_token %}
         <div>
             <label for="username"></label>
@@ -16,9 +16,14 @@
             <label for="password"></label>
             <input type="text" id="password" name="password">
         </div>
+        {% if error %}
+            <div class="alert alert-danger" role="alert">
+                {{ error }}
+            </div>
+        {% endif %}
         <div>
-            <button type="submit">로그인</button>
-            <a href="/">메인 페이지 가기!</a>
+            <button type="submit">회원가입</button>
+            <a href="/sign-in">로그인 하러 가기!</a>
         </div>
     </form>
 </body>

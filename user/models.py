@@ -1,12 +1,12 @@
 from django.db import models
-# from django.contrib.auth.models import AbstractUser
-from django.conf import settings
+from django.contrib.auth.models import AbstractUser
+from configparser import MAX_INTERPOLATION_DEPTH
+# from django.conf import settings
 
-class UserModel(models.Model):
+class UserModel(AbstractUser):
     class Meta:
         db_table = "user"
         
-    username = models.CharField(max_length=20, null=False) 
-    password = models.CharField(max_length=256, null=False)
-    created_at = models.DateTimeField(auto_now_add=True) 
-    updated_at = models.DateTimeField(auto_now=True)
+    # username = models.CharField(max_length=20, null=False) 
+    # password = models.CharField(max_length=256, null=False)
+
