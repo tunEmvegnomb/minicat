@@ -28,10 +28,20 @@
 <body>
 <h3>팔로우 테스트를 위한 페이지입니다!</h3>
 {% for user in all_user %}
-<div class="follow_card follow_off">
-    <div>{{ user.username }}</div>
-    <button>follow</button>
-</div>
+    {% for status in status_follow %}
+        {% if status.followee == user.username %}
+            <div class="follow_card follow_off">
+                <div>{{ user.username }}</div>
+                <button>follow</button>
+            </div>
+        {% elif status.followee != user.username %}
+            <div class="follow_card follow_on">
+                <div>{{ user.username }}</div>
+                <button>follow cancel</button>
+            </div>
+        {% endif %}
+    {% endfor %}
+
 {% endfor %}
 </body>
 </html>
