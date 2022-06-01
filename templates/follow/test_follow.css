@@ -1,9 +1,12 @@
 .follow_card {
     width: 200px;
     height: 50px;
-    background-color: coral;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
+}
+
+.follow_on {
+    background-color: coral;
 }
