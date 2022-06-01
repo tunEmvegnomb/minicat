@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from .models import UserModel
 from django.contrib.auth import get_user_model
 from django.contrib import auth
-# from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required
 
 
 
@@ -38,10 +38,16 @@ def sign_in_view(request):
             auth.login(request, user)
             return redirect('/')
         else:
-            return render(request, 'user/signup.html', {'error':'username 또는 password를 확인해주세요'})
+            return render(request, 'user/signin.html', {'error':'username 또는 password를 확인해주세요'})
     elif request.method == 'GET':
         user = request.user.is_authenticated
         if user:
             return redirect('/')
         else:
             return render(request, 'user/signin.html')
+        
+        
+@login_required
+def logout(request):
+    auth.logout(request)
+    return redirect('/')
