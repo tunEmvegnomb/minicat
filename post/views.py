@@ -1,6 +1,9 @@
 from django.shortcuts import render, redirect
 from .models import PostModel
+from .forms import UploadFileForm
+# from rest_framwork.views import API
 # from datetime import datetime, timedelta
+
 
 from django.http import HttpResponse
 
@@ -14,11 +17,8 @@ def post(request):
         return render(request, 'home.html', {'post': all_post})
     elif request.method == 'POST':
         # author = request.user
-        # text = request.POST.get('desc_give','')
-        text = request.form['desc_give']
-        print(text)
-        file = request.files('file_give')
+        file = UploadFileForm(request.POST, request.FILES)
+        print(file)
 
-        print(text)
         return HttpResponse("업로드가 잘되었습니다")
 
