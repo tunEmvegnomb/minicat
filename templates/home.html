@@ -6,6 +6,8 @@
     <!-- Required meta tags -->
     <meta charset="UTF-8">
     <title>Post입니다</title>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <script src="https://use.fortawesome.com/99966411.js"></script>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
@@ -174,6 +176,8 @@
 
     //파일 업로드 여기서부터 시작
     function uploading_files() {
+        var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content");
         let file = files[0]; //실제 파일
         let image = files[0].name; //파일명
         let desc = $('#input_feed_content').val(); //이미지 밑에 쓴 글
@@ -181,9 +185,13 @@
         let formData = new FormData();
         formData.append('file_give', file)
         formData.append('desc_give', desc)
+
         $.ajax({
             method: 'POST',
-            url: '/post/upload',
+            url: '/post/',
+            beforeSend: function(xhr){
+                xhr.setRequestHeader(header,token)
+            },
             processData: false,
             contentType: false,
             data: formData,
