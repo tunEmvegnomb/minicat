@@ -1,0 +1,205 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="UTF-8">
+    <title>Post입니다</title>
+    <script src="https://use.fortawesome.com/99966411.js"></script>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+        <!-- Optional JavaScript -->
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://use.fortawesome.com/99966411.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    <script>
+        $('#nav_bar_add_box').click(function () { //+버튼 클릭시 1번모달창 나타나기
+            $('#first_modal').css({
+                display: 'flex'
+            });
+            $(document.body).css({   //+버튼 클릭시 전체화면 스크롤바 사라짐
+                overflow: 'hidden'
+            })
+        });
+    </script>
+
+
+
+</head>
+
+<body>
+<div class="home_page">
+    <div class="left_row">
+    </div>
+    <div class="center_row">
+        <div class="title_box">
+            Are you a cat person?
+        </div>
+        <div class="card" >
+          <img style="height:400px" src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FkXpDS%2FbtrDGIAFUWk%2FTswNgxoiv39O8xejaguxp1%2Fimg.jpg" class="card-img-top" alt="...">
+          <div class="card-body">
+            <p class="card-text">여기에 이미지 편집할 수 있는 기능 넣어야 하지 않을까?</p>
+          </div>
+        </div>
+    </div>
+    <div class="right_row">
+        <button id="nav_bar_add_box" class="modal_button" data-toggle="modal"
+                            data-target="#addition_modal_box"><i class="fa fa-plus"></i></button>
+    </div>
+</div>
+<!--더하기 버튼 모달(새게시물 만들기)//첫번째-->
+    <div id="first_modal" class="modal_overlay">
+        <div class="modal_window">
+            <div class="addition_modal_head">
+                <div style="width:40px"></div>
+                <p class="modal-title">새 게시물 만들기</p>
+                <button id="modal_x_box" class="modal_x_box"><i class="fa fa-x"></i></button>
+            </div>
+            <div id="image_upload" class="addition_modal_body">
+                사진을 여기에 끌어다 놓으세요
+
+            </div>
+        </div>
+    </div>
+    <!--더하기 버튼 모달(새게시물 만들기)//두번째-->
+    <div id="second_modal" class="modal_overlay">
+        <div class="modal_window2">
+            <div class="addition_modal_head">
+                새 게시물 만들기
+                <button id="modal_x_box2" class="modal_x_box"><i class="fa fa-x"></i></button>
+            </div>
+            <div class="addition_modal_body2">
+                <div class="img_upload_space"></div>
+                <div class="img_description_space">
+                    <div class="img_description_box">
+                        <textarea id="input_feed_content" style="width:100%;height: 100%"
+                            placeholder="내용을 써주세요^^"></textarea>
+                    </div>
+                    <div style="justify-content: center;display: flex">
+                        <button id="feed_create_button" onclick="uploading_files()"
+                            style="background-color: transparent; border-color: #C7B0FFFF; color: #C7B0FFFF;width:100px;border-radius: 5px ">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+<script>
+    let files;
+
+    $('#nav_bar_add_box').click(function(){ //+버튼 클릭시 1번모달창 나타나기
+        $('#first_modal').css({
+            display: 'flex'
+        });
+        $(document.body).css({   //+버튼 클릭시 전체화면 스크롤바 사라짐
+            overflow: 'hidden'
+        })
+    });
+    $('#modal_x_box').click(function () {   //x버튼 클릭시 1번모달창 사라짐
+        $('.modal_overlay').css({
+            display: 'none'
+        });
+        $(document.body).css({
+            overflow: 'visible'
+        })
+    });
+    $('#modal_x_box2').click(function () {   //x버튼 클릭시 2번모달창 사라짐
+        $('.modal_overlay').css({
+            display: 'none'
+        });
+        $(document.body).css({
+            overflow: 'visible'
+        })
+    });
+    $('.addition_modal_body')    //모달창에 드래그앤 드롭 기능 구현하겠다
+        .on("dragover", dragOver)
+        .on("dragleave", dragOver)
+        .on("drop", uploadFiles);
+
+    function dragOver(e) {     //드래그오버 함수
+        e.stopPropagation();   //드래그오버시 모달창만 반응하고 뒤의 페이즈는 반응하지 않음
+        e.preventDefault();
+        if (e.type == "dragover") {  //드래그오버하면 outline이 가운데로 몰림
+            $(e.target).css({
+                "outline-offset": "-20px",
+                "border-radius": "8px"
+            });
+        } else {
+            $(e.target).css({
+                "background-color": "black",
+                "outline-offset": "-10px"
+            });
+        }
+    }
+
+    function uploadFiles(e) {  //업로드파일 함수
+        e.stopPropagation();  //업로드파일시 모달창만 반응하고 뒤의 페이즈는 반응하지 않음
+        e.preventDefault();
+        e.dataTransfer = e.originalEvent.dataTransfer;
+        files = e.dataTransfer.files;
+        if (files.length > 1) {    //파일갯수가 여러개면 하나만 올려주세요 창이 뜸
+            alert('하나만 올려 주세요');
+            return;
+        }
+        //파일이 이미지로 인식되면 배경 이미지 바뀌게 만듬
+        if (files[0].type.match(/image.*/)) {
+            $('#first_modal').css({
+                display: 'none'
+            });
+            $('#second_modal').css({
+                display: 'flex'
+            });
+            $('.img_upload_space').css({
+                "background-image": "url(" + window.URL.createObjectURL(files[0]) + ")",
+                "outline": "none",
+                "background-size": "100% 100%"
+            });
+        } else {
+            alert('이미지가 아닙니다.');
+        }
+    }
+
+    //파일 업로드 여기서부터 시작
+    function uploading_files() {
+        let file = files[0]; //실제 파일
+        let image = files[0].name; //파일명
+        let desc = $('#input_feed_content').val(); //이미지 밑에 쓴 글
+        console.log(image)
+        let formData = new FormData();
+        formData.append('file_give', file)
+        formData.append('desc_give', desc)
+        $.ajax({
+            method: 'POST',
+            url: '/post/upload',
+            processData: false,
+            contentType: false,
+            data: formData,
+            success: function (data) {
+                console.log("성공");
+            },
+            error: function(request,status, error){
+                console.log("에러");
+            },
+            complete: function(){
+                console.log("완료");
+            }
+        });
+    }
+</script>
+    <script type="text/javascript" src="../static/script.js"></script>
+</body>
+
+</html>
