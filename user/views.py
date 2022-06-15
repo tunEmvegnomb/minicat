@@ -5,14 +5,13 @@ from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 
 
-
-def sign_up_view(request):
+def sign_up(request):
     if request.method == 'GET':
         user = request.user.is_authenticated
         if user:
-            return redirect('/') #인증됨> 홈
+            return redirect('/') 
         else:
-            return render(request, 'user/signup.html') #인증안됨>회원가입
+            return render(request, 'user/signup.html') 
     elif request.method == 'POST':
         username = request.POST.get('username', '')
         password = request.POST.get('password', '')
@@ -27,9 +26,14 @@ def sign_up_view(request):
         return redirect('/sign-in')
     
     
-    
-def sign_in_view(request):
-    if request.method == 'POST':
+def sign_in(request):
+    if request.method == 'GET':
+        user = request.user.is_authenticated
+        if user:
+            return redirect('/')
+        else:
+            return render(request, 'user/signin.html')
+    elif request.method == 'POST':
         username = request.POST.get('username', '')
         password = request.POST.get('password', '')
         
@@ -39,15 +43,13 @@ def sign_in_view(request):
             return redirect('/')
         else:
             return render(request, 'user/signin.html', {'error':'username 또는 password를 확인해주세요'})
-    elif request.method == 'GET':
-        user = request.user.is_authenticated
-        if user:
-            return redirect('/')
-        else:
-            return render(request, 'user/signin.html')
-        
+
         
 @login_required
 def logout(request):
     auth.logout(request)
     return redirect('/')
+
+
+
+
