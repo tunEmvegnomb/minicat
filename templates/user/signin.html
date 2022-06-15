@@ -5,26 +5,29 @@
     <title>로그인</title>
 </head>
 <body>
-<h1>로그인</h1>
-    <form method="post" action="/sign-in/">
-        {% csrf_token %}
-        <div>
-            <label for="username"></label>
-            <input type="text" id="username" name="username">
-        </div>
-        <div>
-            <label for="password"></label>
-            <input type="text" id="password" name="password">
-        </div>
-        {% if error %}
-            <div class="alert alert-danger" role="alert">
-                {{ error }}
+    <a href="/">홈페이지로</a>
+    <h1>로그인</h1>
+        <form method="post" action="/sign-in/">
+            {% csrf_token %}
+            <div>
+                <label for="username"></label>
+                <input type="text" id="username" name="username" placeholder="username">
             </div>
-        {% endif %}
-        <div>
-            <button type="submit">로그인</button>
-            <a href="/">메인 페이지 가기!</a>
-        </div>
-    </form>
+            <div>
+                <label for="password"></label>
+                <input type="password" id="password" name="password" placeholder="password">
+            </div>
+            {% if error %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+            {% endif %}
+            <div>
+                <button type="submit">로그인</button>
+            </div>
+            <div>
+                <button type="button" onclick="location.href='/sign-up/'">회원가입으로</button>
+            </div>
+        </form>
 </body>
 </html>
