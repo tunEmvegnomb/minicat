@@ -101,8 +101,11 @@
             </div>
         </div>
     </div>
-
-
+    <form method="post" action="/catfact/">
+        {% csrf_token %}
+        <button type="submit">showcatfacts</button>
+    </form>
+    <h3>{{ catfact }}</h3>
 
 <script>
     let files;
