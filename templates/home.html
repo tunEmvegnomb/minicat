@@ -61,6 +61,8 @@
     </div>
 </div>
 <!--더하기 버튼 모달(새게시물 만들기)//첫번째-->
+<form action="/post/" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
     <div id="first_modal" class="modal_overlay">
         <div class="modal_window">
             <div class="addition_modal_head">
@@ -68,9 +70,9 @@
                 <p class="modal-title">새 게시물 만들기</p>
                 <button id="modal_x_box" class="modal_x_box"><i class="fa fa-x"></i></button>
             </div>
-            <div id="image_upload" class="addition_modal_body">
+            <div id="image_upload" class="addition_modal_body" style="color:white">
                 사진을 여기에 끌어다 놓으세요
-
+                    <input name="file_upload" type="file" accept="image/*">
             </div>
         </div>
     </div>
@@ -85,18 +87,17 @@
                 <div class="img_upload_space"></div>
                 <div class="img_description_space">
                     <div class="img_description_box">
-                        <textarea id="input_feed_content" style="width:100%;height: 100%"
+                        <textarea name="text123" id="input_feed_content" style="width:100%;height: 100%"
                             placeholder="내용을 써주세요^^"></textarea>
                     </div>
                     <div style="justify-content: center;display: flex">
-                        <button id="feed_create_button" onclick="uploading_files()"
-                            style="background-color: transparent; border-color: #C7B0FFFF; color: #C7B0FFFF;width:100px;border-radius: 5px ">Submit</button>
+                        <button type="submit" style="background-color: transparent; border-color: #C7B0FFFF; color: #C7B0FFFF;width:100px;border-radius: 5px ">Submit</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
+</form>
 
 
 <script>
