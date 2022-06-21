@@ -7,8 +7,9 @@ from . import views
 urlpatterns = [
     path('', views.home, name='home'),
     path('post/', views.post, name='post'),
-
+    path('catfact/', views.get_catfact, name='get_catfact'),
 
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+

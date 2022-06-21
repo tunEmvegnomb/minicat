@@ -58,6 +58,11 @@
     <div class="right_row">
         <button id="nav_bar_add_box" class="modal_button" data-toggle="modal"
                             data-target="#addition_modal_box"><i class="fa fa-plus"></i></button>
+        {% if not user.is_authenticated %}
+        <button type="button" onclick="location.href='/sign-in/'">로그인</button>
+        {% else %}
+        <button type="button" onclick="location.href='/logout/'">로그아웃</button>
+        {% endif %}
     </div>
 </div>
 <!--더하기 버튼 모달(새게시물 만들기)//첫번째-->
@@ -97,7 +102,11 @@
             </div>
         </div>
     </div>
-</form>
+    <form method="post" action="/catfact/">
+        {% csrf_token %}
+        <button type="submit">showcatfacts</button>
+    </form>
+    <h3>{{ catfact }}</h3>
 
 
 <script>

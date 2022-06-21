@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>회원가입</title>
+</head>
+<body>
+    <a href="/">홈페이지로</a>
+    <h1>회원가입</h1>
+        <form method="post" action="/sign-up/">
+            {% csrf_token %}
+            <div>
+                <label for="username"></label>
+                <input type="text" id="username" name="username" placeholder="username">
+            </div>
+            <div>
+                <label for="password"></label>
+                <input type="password" id="password" name="password" placeholder="password">
+            </div>
+            {% if error %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+            {% endif %}
+            <div>
+                <button type="submit">회원가입</button>
+            </div>
+            <div>
+                <button type="button" onclick="location.href='/sign-in/'">로그인으로</button>
+            </div>
+        </form>
+</body>
+</html>
